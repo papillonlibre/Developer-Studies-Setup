@@ -1,0 +1,16 @@
+[Unit]
+Description=Spindrift: replay the production traces into NeMo Helix Intake once it is healthy
+After=network-online.target
+ConditionPathExists=!${STUDY_DIR}/.replayed
+
+[Service]
+Type=simple
+User=${TARGET_USER}
+Environment=NMP_BASE_URL=http://127.0.0.1:8080
+Environment=WORKSPACE=${INTAKE_WORKSPACE}
+ExecStart=/usr/bin/python3 -I ${STUDY_DIR}/replay-traces.py --wait
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target

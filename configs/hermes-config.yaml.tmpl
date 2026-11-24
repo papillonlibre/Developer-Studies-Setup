@@ -1,0 +1,13 @@
+model:
+  provider: "${HERMES_PROVIDER}"
+  default: "${MODEL_ALIAS}"
+  base_url: "http://127.0.0.1:${LLAMA_PORT}/v1"
+  api_mode: "chat_completions"
+
+providers:
+  ${HERMES_PROVIDER}:
+    name: "Local Nemotron Bolt (llama.cpp)"
+    base_url: "http://127.0.0.1:${LLAMA_PORT}/v1"
+    key_env: "LOCAL_LLM_API_KEY"
+    api_mode: "chat_completions"
+    default_model: "${MODEL_ALIAS}"

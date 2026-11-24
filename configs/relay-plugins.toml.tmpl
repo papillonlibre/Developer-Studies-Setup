@@ -1,0 +1,33 @@
+version = 1
+
+[[components]]
+kind = "observability"
+enabled = true
+
+[components.config]
+version = ${RELAY_SCHEMA_VERSION}
+enable_full_payloads = false
+
+# ATIF: completed trajectories on disk (same format as the staged production traces).
+[components.config.atif]
+enabled = true
+agent_name = "${HERMES_AGENT_NAME}"
+agent_version = "${HERMES_AGENT_VERSION}"
+model_name = "${MODEL_ALIAS}"
+output_directory = "${RELAY_OUT_DIR}/atif"
+filename_template = "trajectory-{session_id}.json"
+
+# OpenTelemetry: live OTLP to Helix Intake. Fails quietly until Intake is running.
+[components.config.opentelemetry]
+enabled = true
+
+[[components.config.opentelemetry.endpoints]]
+type = "${RELAY_OTLP_TYPE}"
+endpoint = "${INTAKE_OTLP_URL}"
+transport = "http_binary"
+service_name = "${HERMES_AGENT_NAME}"
+service_version = "${HERMES_AGENT_VERSION}"
+
+[components.config.opentelemetry.endpoints.resource_attributes]
+"agent.version" = "${HERMES_AGENT_VERSION}"
+"agent.name" = "${HERMES_AGENT_NAME}"

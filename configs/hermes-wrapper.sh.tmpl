@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# `hermes` wrapper: always selects the Relay config and sets the local key, in any shell.
+export HERMES_NEMO_RELAY_PLUGINS_TOML="${HERMES_NEMO_RELAY_PLUGINS_TOML:-${HERMES_HOME_DIR}/plugins.toml}"
+export LOCAL_LLM_API_KEY="${LOCAL_LLM_API_KEY:-local-no-key-needed}"
+exec "${HERMES_PY}" -m hermes_cli.main "$@"
